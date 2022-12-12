@@ -1,36 +1,8 @@
-![](https://visitor-badge.glitch.me/badge?style=flat-square&page_id=smallprogram.OpenWrtAction) ![](https://img.shields.io/github/release-date/smallprogram/OpenWrtAction?style=flat-square) ![](https://img.shields.io/github/last-commit/smallprogram/OpenWrtAction?style=flat-square) ![](https://img.shields.io/github/repo-size/smallprogram/OpenWrtAction?style=flat-square) [![](https://img.shields.io/github/license/smallprogram/OpenWrtAction?style=flat-square)](https://github.com/smallprogram/OpenWrtAction/blob/main/LICENSE?style=flat-square)
-[![](https://img.shields.io/badge/source%20code-Lean-green?style=flat-square&logo=GitHub)](https://github.com/coolsnowwolf/lede) [![](https://img.shields.io/badge/update%20checker-blueviolet?style=flat-square&logo=Checkmarx)](https://github.com/smallprogram/OpenWrtAction/releases) 
-
-![](https://img.shields.io/github/watchers/smallprogram/OpenWrtAction?style=social) ![](https://img.shields.io/github/forks/smallprogram/OpenWrtAction?style=social) ![](https://img.shields.io/github/stars/smallprogram/OpenWrtAction?style=social)
-
-<!-- ![](https://img.shields.io/github/downloads/smallprogram/OpenWrtAction/total?style=flat-square)  -->
-
-## WorkFlows
-|ActionStatus|Network Support
-|-|-|
-|[![Build-OpenWrt_X86](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_X86.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_X86.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-|[![Build-OpenWrt_R5S](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R5S.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R5S.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-|[![Build-OpenWrt_R4S](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R4S.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R4S.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-|[![Build-OpenWrt_R2S](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R2S.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R2S.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-|[![Build-OpenWrt_R2C](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R2C.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_R2C.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-|[![Build-OpenWrt_Pi4ModelB](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_Pi4ModelB.yml/badge.svg)](https://github.com/smallprogram/OpenWrtAction/actions/workflows/Build-OpenWrt_Pi4ModelB.yml)|![](https://img.shields.io/badge/-IPv4-green) ![](https://img.shields.io/badge/-IPv6-yellowgreen)|
-
-
 # [English Readme](README_EN.md)
 
 # [最新固件列表，点击自取](https://github.com/smallprogram/OpenWrtAction/tags)
 
 # 感觉不错的话，给个Star吧
-
-## [R1软路由安装ESXi 8.0教程](R1_ESXI8.md)
-![image](pic/R1_ESXI8/banner.png)
-
-# Lean Openwrt GitHubAction
-
-![image](/source/login.gif)
-
-![image](/source/login2.jpg)
-### 根据源码更新自动编译
 
 ## 相关参数
 1. 默认地址:`10.10.0.253`
@@ -86,33 +58,5 @@ R2C软路由|128Mb|896Mb|https://github.com/smallprogram/OpenWrtAction/blob/main
 ![image](/source/main.png)
 
 
-## wsl2op.sh本地自动编译shell脚本说明
 
-运行前请确保你的编译环境已经安装Lean源码中要求的编译环境，并且使用非root用户执行。如果未满足Lean源码编译环境要求，请执行如下命令:
-```shell
-sudo apt update -y
-sudo apt full-upgrade -y
-sudo apt install -y ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
-bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
-git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
-libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
-mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
-rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
-```
-
-### 执行编译方式(非Root用户)
-
-```shell
-cd /home/$USER && (if [ ! -d "/home/$USER/OpenWrtAction" ]; then git clone https://github.com/smallprogram/OpenWrtAction.git; else cd /home/$USER/OpenWrtAction; git stash; git stash drop; git pull; fi;) && cd /home/$USER/OpenWrtAction && bash wsl2op.sh
-```
-
-### 自动化编译参数
-可在 `wsl2op.sh` 后加入两个可选参数：
-
-`bash wsl2op.sh [configname] [distclean]`
-
-`[configname]`为配置文件名称，例如`bash wsl2op.sh X86.config`,会自动默认以X86配置编译。
-`[distclean]`为启用distclean编译开关，例如`bash wsl2op.sh X86.config 1`,会自动默认以X86配置编译，并启用distclean模式。
-
-注意如果要使用`[distclean]`参数，必须要先加入`[configname]`参数，如果想不指定`[configname]`,可使用空格代替，例如`bash wsl2op.sh [空格] 1`
 
