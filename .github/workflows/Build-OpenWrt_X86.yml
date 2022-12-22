@@ -22,7 +22,7 @@ on:
   #   - cron: 0 */8 * * *
 
 env:
-  REPO_URL: git clone https://github.com/immortalwrt/immortalwrt
+  REPO_URL: git clone https://github.com/Lienol/openwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds_config/custom.feeds.conf.default
   CONFIG_FILE: config/X86.config
