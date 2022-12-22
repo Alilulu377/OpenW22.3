@@ -1,56 +1,56 @@
 #
-#版权所有 (c) 2022-2023 SMALLPROGRAM <https://github.com/smallprogram/OpenWrtAction>
+# Copyright (c) 2022-2023 SMALLPROGRAM <https://github.com/smallprogram/OpenWrtAction>
 #
-#这是免费软件，根据 MIT 许可证获得许可。
-#查看 /LICENSE 了解更多信息。
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
 #
 # https://github.com/smallprogram/OpenWrtAction
-#说明：使用 GitHub Actions 构建 OpenWrt
+# Description: Build OpenWrt using GitHub Actions
 #
 
-名称：Build-OpenWrt_X86
+name: Build-OpenWrt_X86
 
-上：
-  repository_dispatch：
-  workflow_dispatch：
-    输入：
-      SSH：
-        描述：' SSH 连接到 Actions '
-        必填：假
-        默认值：“假”
-  #时间表：
-  #    - cron: 0 */8 * * *
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  # schedule:
+  #   - cron: 0 */8 * * *
 
-环境：
-  回购网址：https ://github.com/coolsnowwolf/lede
-  REPO_BRANCH：主人
-  FEEDS_CONF：feeds_config/custom.feeds.conf.default
-  配置文件：配置/X86.config
-  DIY_P1_SH : diy_script/diy-part1.sh
-  DIY_P2_SH : diy_script/diy-part2.sh
-  COMMIT_LOG_NUM：1
-  RELEASE_TAG：X86
-  UPLOAD_BIN_DIR：错误
-  上传固件：真
-  UPLOAD_COWTRANSFER：错误
-  UPLOAD_WETRANSFER：错误
-  上传发布：真
-  SERVERCHAN_SCKEY：真 
-  TZ :亚洲/上海
+env:
+  REPO_URL: https://github.com/Lienol/openwrt lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds_config/custom.feeds.conf.default
+  CONFIG_FILE: config/X86.config
+  DIY_P1_SH: diy_script/diy-part1.sh
+  DIY_P2_SH: diy_script/diy-part2.sh
+  COMMIT_LOG_NUM: 1
+  RELEASE_TAG: X86
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  SERVERCHAN_SCKEY: true 
+  TZ: Asia/Shanghai
 
-职位：
-  构建：
-    运行：ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    步骤：
-    -名称：结帐
-      使用：动作/结帐@main
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
 
-    -名称：初始化环境
-      环境：
-        DEBIAN_FRONTEND：非交互式
-      运行：|
-        docker rmi`docker images -q`
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        docker rmi `docker images -q`
         sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android /opt/ghc
         sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
         sudo -E apt-get -qq update
@@ -221,15 +221,15 @@
     #   uses: GitRML/delete-workflow-runs@main
     #   with:
     #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     存储库：${{ github.repository }}
-    #     保留天数：1
-    #      keep_minimum_runs: 2
+    #     repository: ${{ github.repository }}
+    #     retain_days: 1
+    #     keep_minimum_runs: 2
 
-    # - 名称：删除旧版本
-    #   使用：smallprogram/delete-older-releases@v0.2.1
-    #    if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-    #   与：
-    #      keep_latest: 15
-    #      delete_tags: true
-    #   环境：
-    #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Remove old Releases
+    #   uses: smallprogram/delete-older-releases@v0.2.1
+    #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    #   with:
+    #     keep_latest: 15
+    #     delete_tags: true
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
